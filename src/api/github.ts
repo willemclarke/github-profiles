@@ -10,14 +10,14 @@ export interface GithubUserResponse {
   public_repos: number;
 }
 
-export interface GithubRepoResponse {
-  name: string;
-  stargazrers_count: number;
+interface GithubUserReposResponse {
+  repoName: string;
+  stargazers_count: number;
   forks_count: number;
   description: string;
 }
 
-function getUserGitData(username: string): rp.RequestPromise<GithubUserResponse> {
+function getGithubUser(username: string): rp.RequestPromise<GithubUserResponse> {
   const options = {
     url: `https://api.github.com/users/${username}`,
     json: true
@@ -25,7 +25,7 @@ function getUserGitData(username: string): rp.RequestPromise<GithubUserResponse>
   return rp(options);
 }
 
-function getUserGitRepos(username: string): rp.RequestPromise<GithubRepoResponse> {
+function getGithubUserRepos(username: string): rp.RequestPromise<GithubUserReposResponse[]> {
   const options = {
     url: `https://api.github.com/users/${username}/repos`,
     json: true
@@ -33,26 +33,45 @@ function getUserGitRepos(username: string): rp.RequestPromise<GithubRepoResponse
   return rp(options);
 }
 
-export function sortGitUserData(username: string) {
-  getUserGitData(username).then(res => {
-    const { name, login, avatar_url, followers, bio, public_repos } = res;
-    return getUserGitRepos(username).then(res => {
-      const orderReposByStarCount = _.orderBy(res, ["stargazers_count"], ["desc"]);
-      const topFourRepos = _.slice(orderReposByStarCount, 0, 4);
-      const data = {
-        name,
-        username: login,
-        avatar: avatar_url,
-        followers: followers,
-        description: bio,
-        repositorys: public_repos,
-        repoOne: topFourRepos[0],
-        repoTwo: topFourRepos[1],
-        repoFive: topFourRepos[2],
-        repoFour: topFourRepos[3]
-      };
-      console.log(data);
-      return data;
+export interface GithubUserData {
+  name: string;
+  username: string;
+  avatar: string;
+  followers: number;
+  description: string;
+  repositorys: number;
+  repoOne: Partial<GithubUserReposResponse>;
+  repoTwo: Partial<GithubUserReposResponse>;
+  repoThree: Partial<GithubUserReposResponse>;
+  repoFour: Partial<GithubUserReposResponse>;
+}
+
+export async function sortGitUserData(username: string): Promise<GithubUserData> {
+  try {
+    const user = await getGithubUser(username);
+    const { name, login, avatar_url, followers, bio, public_repos } = user;
+    const userRepos = await getGithubUserRepos(username);
+    const orderReposByStarCount = _.orderBy(userRepos, ["stargazers_count"], ["desc"]);
+    const topFourRepos = _.slice(orderReposByStarCount, 0, 4);
+    const formattedRepos = _.map(topFourRepos, repo => {
+      return _.pick(repo, "name", "stargazers_count", "forks_count", "description");
     });
-  });
+
+    const data = {
+      name,
+      username: login,
+      avatar: avatar_url,
+      followers: followers,
+      description: bio,
+      repositorys: public_repos,
+      repoOne: formattedRepos[0],
+      repoTwo: formattedRepos[1],
+      repoThree: formattedRepos[2],
+      repoFour: formattedRepos[3]
+    };
+    return data;
+  } catch (err) {
+    console.log("Cannot fetch data from GitHub API", err);
+    throw err;
+  }
 }

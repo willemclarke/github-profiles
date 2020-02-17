@@ -1,23 +1,32 @@
 import React from "react";
 import { Row, Col, Input } from "antd";
 import { Layout } from "antd";
-import { sortGitUserData, GithubUserResponse } from "./api/github";
+import { sortGitUserData, GithubUserData } from "./api/github";
 import * as _ from "lodash";
 
 const { Header, Footer, Content } = Layout;
 const { Search } = Input;
 
 const App: React.FC = () => {
-  const [userDetails, setUserDetails] = React.useState<GithubUserResponse[]>([]);
+  const [userDetails, setUserDetails] = React.useState<GithubUserData>();
+
+  const fetchData = async (username: string) => {
+    const gitUserData = await sortGitUserData(username);
+    setUserDetails(gitUserData);
+  };
+
+  console.log(userDetails);
+
   return (
     <div>
       <Layout>
         <Header>Github Profiles</Header>
         <Content>
+          <div>{JSON.stringify(userDetails)}</div>
           <div>
             <Row type="flex" justify="start" gutter={[16, 40]}>
               <Col span={12}>
-                {<Search placeholder="username" onSearch={username => sortGitUserData(username)} style={{ width: 200 }} />}
+                {<Search placeholder="username" onSearch={username => fetchData(username)} style={{ width: 200 }} />}
               </Col>
             </Row>
             <Row type="flex" justify="center" gutter={[16, 40]}>
