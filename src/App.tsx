@@ -1,7 +1,9 @@
 import React from "react";
-import { Row, Col, Input } from "antd";
+import { Row, Col, Input, Spin } from "antd";
 import { Layout } from "antd";
 import { sortGitUserData, GithubUserData } from "./api/github";
+import { UserInfo } from "./components/UserInfo";
+import { RepoInfo } from "./components/RepoInfo";
 import * as _ from "lodash";
 
 const { Header, Footer, Content } = Layout;
@@ -15,35 +17,40 @@ const App: React.FC = () => {
     setUserDetails(gitUserData);
   };
 
+  React.useEffect(() => {
+    fetchData("willemclarke");
+  }, []);
+
   console.log(userDetails);
 
+  const content = userDetails ? (
+    <Row>
+      <Row style={{ display: "flex", justifyContent: "center" }}>
+        <Search
+          style={{ width: "400px" }}
+          placeholder="input search text"
+          enterButton="Search"
+          size="large"
+          onSearch={username => fetchData(username)}
+        />
+      </Row>
+      <Col span={6} style={{ background: "#CDDDDD", height: "470px" }}>
+        <UserInfo user={userDetails} />
+      </Col>
+      <Col span={18} style={{ background: "#CDDDDD", height: "470px", display: "flex", justifyContent: "center" }}>
+        <RepoInfo repo={userDetails} />
+      </Col>
+    </Row>
+  ) : (
+    <Spin />
+  );
+
   return (
-    <div>
-      <Layout>
-        <Header>Github Profiles</Header>
-        <Content>
-          <div>{JSON.stringify(userDetails)}</div>
-          <div>
-            <Row type="flex" justify="start" gutter={[16, 40]}>
-              <Col span={12}>
-                {<Search placeholder="username" onSearch={username => fetchData(username)} style={{ width: 200 }} />}
-              </Col>
-            </Row>
-            <Row type="flex" justify="center" gutter={[16, 40]}>
-              <Col span={12}>Profile avatar here</Col>
-              <Col span={12}>#2 Repo here</Col>
-              <Col span={12}>#1 Repo here</Col>
-            </Row>
-            <Row type="flex" justify="center">
-              <Col span={12}>Profile Info here</Col>
-              <Col span={12}>#3 Repo here</Col>
-              <Col span={12}>#4 Repo here</Col>
-            </Row>
-          </div>
-        </Content>
-        <Footer>Footer</Footer>
-      </Layout>
-    </div>
+    <Layout>
+      <Header>Github Profiles</Header>
+      <Content>{content}</Content>
+      <Footer style={{ textAlign: "center", background: "#CDDDDD" }}></Footer>
+    </Layout>
   );
 };
 

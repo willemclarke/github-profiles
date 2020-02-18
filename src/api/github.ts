@@ -10,11 +10,21 @@ export interface GithubUserResponse {
   public_repos: number;
 }
 
-interface GithubUserReposResponse {
-  repoName: string;
+export interface GithubUserReposResponse {
+  name: string;
   stargazers_count: number;
   forks_count: number;
   description: string;
+}
+
+export interface GithubUserData {
+  name: string;
+  username: string;
+  avatar: string;
+  followers: number;
+  description: string;
+  repositoriesCount: number;
+  repositories: GithubUserReposResponse[];
 }
 
 function getGithubUser(username: string): rp.RequestPromise<GithubUserResponse> {
@@ -33,19 +43,6 @@ function getGithubUserRepos(username: string): rp.RequestPromise<GithubUserRepos
   return rp(options);
 }
 
-export interface GithubUserData {
-  name: string;
-  username: string;
-  avatar: string;
-  followers: number;
-  description: string;
-  repositorys: number;
-  repoOne: Partial<GithubUserReposResponse>;
-  repoTwo: Partial<GithubUserReposResponse>;
-  repoThree: Partial<GithubUserReposResponse>;
-  repoFour: Partial<GithubUserReposResponse>;
-}
-
 export async function sortGitUserData(username: string): Promise<GithubUserData> {
   try {
     const user = await getGithubUser(username);
@@ -53,9 +50,6 @@ export async function sortGitUserData(username: string): Promise<GithubUserData>
     const userRepos = await getGithubUserRepos(username);
     const orderReposByStarCount = _.orderBy(userRepos, ["stargazers_count"], ["desc"]);
     const topFourRepos = _.slice(orderReposByStarCount, 0, 4);
-    const formattedRepos = _.map(topFourRepos, repo => {
-      return _.pick(repo, "name", "stargazers_count", "forks_count", "description");
-    });
 
     const data = {
       name,
@@ -63,11 +57,8 @@ export async function sortGitUserData(username: string): Promise<GithubUserData>
       avatar: avatar_url,
       followers: followers,
       description: bio,
-      repositorys: public_repos,
-      repoOne: formattedRepos[0],
-      repoTwo: formattedRepos[1],
-      repoThree: formattedRepos[2],
-      repoFour: formattedRepos[3]
+      repositoriesCount: public_repos,
+      repositories: topFourRepos
     };
     return data;
   } catch (err) {
