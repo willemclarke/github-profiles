@@ -1,41 +1,25 @@
 import React from "react";
-import { GithubUserData } from "../api/github";
+import { GithubUserRepoResponse } from "../api/github";
 import { List, Avatar, Icon } from "antd";
 import * as _ from "lodash";
 
 interface Props {
-  repo: GithubUserData;
+  repos: GithubUserRepoResponse[];
 }
 
 export const RepoInfo = (props: Props): JSX.Element => {
-  const data = [
-    {
-      title: props.repo.repositories[0].name,
-      description: props.repo.repositories[0].description,
-      starCount: props.repo.repositories[0].stargazers_count.toString(),
-      forkCount: props.repo.repositories[0].forks_count.toString()
-    },
-    {
-      title: props.repo.repositories[1].name,
-      description: props.repo.repositories[1].description,
-      starCount: props.repo.repositories[1].stargazers_count.toString(),
-      forkCount: props.repo.repositories[1].forks_count.toString()
-    },
-    {
-      title: props.repo.repositories[2].name,
-      description: props.repo.repositories[2].description,
-      starCount: props.repo.repositories[2].stargazers_count.toString(),
-      forkCount: props.repo.repositories[2].forks_count.toString()
-    },
-    {
-      title: props.repo.repositories[3].name,
-      description: props.repo.repositories[3].description,
-      starCount: props.repo.repositories[3].stargazers_count.toString(),
-      forkCount: props.repo.repositories[3].forks_count.toString()
-    }
-  ];
+  const { repos } = props;
 
-  const IconText = ({ type, text }: any) => (
+  const data = _.map(repos, repository => {
+    return {
+      title: repository.name,
+      description: repository.description,
+      starCount: repository.stargazers_count,
+      forkCount: repository.forks_count
+    };
+  });
+
+  const IconText = ({ type, text }: any): JSX.Element => (
     <span>
       <Icon type={type} style={{ marginRight: 8, color: "#E0AA2A" }} />
       {text}

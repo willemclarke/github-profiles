@@ -1,3 +1,4 @@
+import React from "react";
 import rp from "request-promise";
 import * as _ from "lodash";
 
@@ -10,7 +11,7 @@ export interface GithubUserResponse {
   public_repos: number;
 }
 
-export interface GithubUserReposResponse {
+export interface GithubUserRepoResponse {
   name: string;
   stargazers_count: number;
   forks_count: number;
@@ -24,7 +25,7 @@ export interface GithubUserData {
   followers: number;
   description: string;
   repositoriesCount: number;
-  repositories: GithubUserReposResponse[];
+  repositories: GithubUserRepoResponse[];
 }
 
 function getGithubUser(username: string): rp.RequestPromise<GithubUserResponse> {
@@ -35,7 +36,7 @@ function getGithubUser(username: string): rp.RequestPromise<GithubUserResponse> 
   return rp(options);
 }
 
-function getGithubUserRepos(username: string): rp.RequestPromise<GithubUserReposResponse[]> {
+function getGithubUserRepos(username: string): rp.RequestPromise<GithubUserRepoResponse[]> {
   const options = {
     url: `https://api.github.com/users/${username}/repos`,
     json: true

@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Input, Spin } from "antd";
+import { Row, Col, Input, Spin, Alert } from "antd";
 import { Layout } from "antd";
 import { sortGitUserData, GithubUserData } from "./api/github";
 import { UserInfo } from "./components/UserInfo";
@@ -28,7 +28,7 @@ export const App: React.FC = () => {
           onSearch={username => fetchData(username)}
         />
       </Row>
-      <Col className="user-info" span={6} style={{ background: "#CDDDDD", height: "470px" }}>
+      <Col className="user-info" span={6} style={{ background: "#CDDDDD", height: "470px", display: "flex", alignItems: "right" }}>
         {userDetails ? <UserInfo user={userDetails} /> : null}
       </Col>
       <Col
@@ -36,7 +36,7 @@ export const App: React.FC = () => {
         span={18}
         style={{ background: "#CDDDDD", height: "470px", display: "flex", justifyContent: "center" }}
       >
-        {userDetails ? <RepoInfo repo={userDetails} /> : null}
+        {userDetails ? <RepoInfo repos={userDetails.repositories} /> : null}
       </Col>
     </Row>
   );
