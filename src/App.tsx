@@ -9,40 +9,36 @@ import * as _ from "lodash";
 const { Header, Footer, Content } = Layout;
 const { Search } = Input;
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   const [userDetails, setUserDetails] = React.useState<GithubUserData>();
 
-  const fetchData = async (username: string) => {
+  const fetchData = async (username: string): Promise<void> => {
     const gitUserData = await sortGitUserData(username);
     setUserDetails(gitUserData);
   };
 
-  React.useEffect(() => {
-    fetchData("willemclarke");
-  }, []);
-
-  console.log(userDetails);
-
-  const content = userDetails ? (
+  const content: JSX.Element = (
     <Row>
-      <Row style={{ display: "flex", justifyContent: "center" }}>
+      <Row style={{ display: "flex", justifyContent: "center", paddingBottom: "50px" }}>
         <Search
           style={{ width: "400px" }}
-          placeholder="input search text"
+          placeholder="Username"
           enterButton="Search"
           size="large"
           onSearch={username => fetchData(username)}
         />
       </Row>
-      <Col span={6} style={{ background: "#CDDDDD", height: "470px" }}>
-        <UserInfo user={userDetails} />
+      <Col className="user-info" span={6} style={{ background: "#CDDDDD", height: "470px" }}>
+        {userDetails ? <UserInfo user={userDetails} /> : null}
       </Col>
-      <Col span={18} style={{ background: "#CDDDDD", height: "470px", display: "flex", justifyContent: "center" }}>
-        <RepoInfo repo={userDetails} />
+      <Col
+        className="repo-info"
+        span={18}
+        style={{ background: "#CDDDDD", height: "470px", display: "flex", justifyContent: "center" }}
+      >
+        {userDetails ? <RepoInfo repo={userDetails} /> : null}
       </Col>
     </Row>
-  ) : (
-    <Spin />
   );
 
   return (
@@ -53,5 +49,3 @@ const App: React.FC = () => {
     </Layout>
   );
 };
-
-export default App;

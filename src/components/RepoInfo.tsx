@@ -1,12 +1,13 @@
 import React from "react";
-import { GithubUserData, GithubUserReposResponse } from "../api/github";
+import { GithubUserData } from "../api/github";
 import { List, Avatar, Icon } from "antd";
+import * as _ from "lodash";
 
 interface Props {
   repo: GithubUserData;
 }
 
-export const RepoInfo = (props: Props) => {
+export const RepoInfo = (props: Props): JSX.Element => {
   const data = [
     {
       title: props.repo.repositories[0].name,
@@ -36,7 +37,7 @@ export const RepoInfo = (props: Props) => {
 
   const IconText = ({ type, text }: any) => (
     <span>
-      <Icon type={type} style={{ marginRight: 8 }} />
+      <Icon type={type} style={{ marginRight: 8, color: "#E0AA2A" }} />
       {text}
     </span>
   );
@@ -55,6 +56,7 @@ export const RepoInfo = (props: Props) => {
           <List.Item.Meta
             avatar={<Avatar src="https://i.dlpng.com/static/png/6804928_preview.png" />}
             title={item.title}
+            style={{}}
             description={item.description}
           />
         </List.Item>

@@ -14,9 +14,10 @@
   background-color: #cddddd;
   font-family: "Helvetica Neue", sans-serif;
   text-decoration: underline;
+  text-underline-position: under;
   font-size: 55px;
-  padding: 50 50 0 0;
-  height: 100px;
+  padding-top: 25px;
+  height: 120px;
   display: flex;
   justify-content: center;
 }
