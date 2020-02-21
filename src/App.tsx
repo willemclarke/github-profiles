@@ -19,9 +19,9 @@ export const App: React.FC = () => {
 
   const content: JSX.Element = (
     <Row>
-      <Row style={{ display: "flex", justifyContent: "center", paddingBottom: "50px", paddingTop: "30px" }}>
+      <Row style={{ display: "flex", justifyContent: "center", paddingBottom: "70px", paddingTop: "60px" }}>
         <Search
-          style={{ width: "400px", color: "#e0aa2a" }}
+          style={{ width: "400px" }}
           placeholder="Username"
           enterButton="Search"
           size="large"
@@ -31,7 +31,7 @@ export const App: React.FC = () => {
       <Col
         className="user-info"
         span={6}
-        style={{ background: "#CDDDDD", height: "470px", width: "269px", display: "flex", justifyContent: "center" }}
+        style={{ background: "#CDDDDD", height: "470px", width: "270px", display: "flex", justifyContent: "center" }}
       >
         {userDetails ? <UserInfo user={userDetails} /> : null}
       </Col>
