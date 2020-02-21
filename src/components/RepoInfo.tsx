@@ -37,14 +37,10 @@ export const RepoInfo = (props: Props): JSX.Element => {
             <IconText type="star" text={item.starCount} key="list-vertical-like-o" />
           ]}
         >
-          <List.Item.Meta
-            avatar={<Avatar src="https://i.dlpng.com/static/png/6804928_preview.png" />}
-            title={item.title}
-            style={{}}
-            description={item.description}
-          />
+          <List.Item.Meta title={item.title} description={item.description} />
         </List.Item>
       )}
+      style={{ width: "616px" }}
     />
   );
 };

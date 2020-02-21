@@ -19,22 +19,26 @@ export const App: React.FC = () => {
 
   const content: JSX.Element = (
     <Row>
-      <Row style={{ display: "flex", justifyContent: "center", paddingBottom: "50px" }}>
+      <Row style={{ display: "flex", justifyContent: "center", paddingBottom: "50px", paddingTop: "30px" }}>
         <Search
-          style={{ width: "400px" }}
+          style={{ width: "400px", color: "#e0aa2a" }}
           placeholder="Username"
           enterButton="Search"
           size="large"
           onSearch={username => fetchData(username)}
         />
       </Row>
-      <Col className="user-info" span={6} style={{ background: "#CDDDDD", height: "470px", display: "flex", alignItems: "right" }}>
+      <Col
+        className="user-info"
+        span={6}
+        style={{ background: "#CDDDDD", height: "470px", width: "269px", display: "flex", justifyContent: "center" }}
+      >
         {userDetails ? <UserInfo user={userDetails} /> : null}
       </Col>
       <Col
         className="repo-info"
         span={18}
-        style={{ background: "#CDDDDD", height: "470px", display: "flex", justifyContent: "center" }}
+        style={{ background: "#CDDDDD", height: "470px", width: "807px", display: "flex", justifyContent: "center" }}
       >
         {userDetails ? <RepoInfo repos={userDetails.repositories} /> : null}
       </Col>
@@ -45,7 +49,6 @@ export const App: React.FC = () => {
     <Layout>
       <Header>Github Profiles</Header>
       <Content>{content}</Content>
-      <Footer style={{ textAlign: "center", background: "#CDDDDD" }}></Footer>
     </Layout>
   );
 };
