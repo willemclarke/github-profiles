@@ -19,9 +19,9 @@ export const RepoInfo = (props: Props): JSX.Element => {
     };
   });
 
-  const IconText = ({ type, text }: any): JSX.Element => (
+  const IconText = ({ type, text, theme }: any): JSX.Element => (
     <span>
-      <Icon type={type} style={{ marginRight: 8, color: "#E0AA2A" }} />
+      <Icon type={type} theme={theme} style={{ marginRight: 8, color: "#E0AA2A", fontSize: "20px" }} />
       {text}
     </span>
   );
@@ -33,8 +33,14 @@ export const RepoInfo = (props: Props): JSX.Element => {
       renderItem={item => (
         <List.Item
           actions={[
-            <IconText type="fork" text={item.forkCount} key="list-vertical-star-o" />,
-            <IconText type="star" text={item.starCount} key="list-vertical-like-o" />
+            <IconText type="fork" text={item.forkCount} key="list-vertical-star-o" style={{ fontSize: "30px", fontWeight: "bold" }} />,
+            <IconText
+              type="star"
+              theme="filled"
+              text={item.starCount}
+              key="list-vertical-like-o"
+              style={{ fontSize: "30px", fontWeight: "bold" }}
+            />
           ]}
         >
           <List.Item.Meta title={item.title} description={item.description} />

@@ -21,21 +21,21 @@ export const UserInfo = (props: Props): JSX.Element => {
 
       <div className="user-info-single-card">
         <Card bordered={false} style={{ paddingTop: "1rem", backgroundColor: "#CDDDDD", color: "#111" }}>
-          <li style={{ display: "flex", justifyContent: "space-between", fontSize: "1.5rem", paddingLeft: "3px" }}>
+          <li style={{ display: "flex", justifyContent: "space-between", fontSize: "1.3rem", paddingLeft: "3px" }}>
             <span>
               <img src="https://i.imgur.com/KSOgrJe.png"></img>
             </span>
             <span>{props.user.username}</span>
           </li>
-          <li style={{ display: "flex", justifyContent: "space-between", fontSize: "1.5rem", paddingLeft: "3px" }}>
+          <li style={{ display: "flex", justifyContent: "space-between", fontSize: "1.4rem", paddingLeft: "3px" }}>
             <span>
-              <Icon type="team" />
+              <Icon type="team" style={{ fontSize: "32px" }} />
             </span>
             <span>{`${props.user.followers} followers`}</span>
           </li>
-          <li style={{ display: "flex", justifyContent: "space-between", fontSize: "1.5rem", paddingLeft: "3px" }}>
+          <li style={{ display: "flex", justifyContent: "space-between", fontSize: "1.4rem", paddingLeft: "3px" }}>
             <span>
-              <Icon type="book" />
+              <Icon type="book" style={{ fontSize: "32px" }} />
             </span>
             <span>{`${props.user.repositoriesCount} repos`}</span>
           </li>

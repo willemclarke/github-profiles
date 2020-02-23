@@ -19,9 +19,9 @@ export const App: React.FC = () => {
 
   const content: JSX.Element = (
     <Row>
-      <Row style={{ display: "flex", justifyContent: "center", paddingBottom: "70px", paddingTop: "60px" }}>
+      <Row style={{ display: "flex", justifyContent: "center", paddingBottom: "40px", paddingTop: "45px" }}>
         <Search
-          style={{ width: "400px" }}
+          style={{ width: "400px", outline: "0 none" }}
           placeholder="Username"
           enterButton="Search"
           size="large"
