@@ -4,7 +4,7 @@
 
 Solo project to improve my understanding of React and further improve my TypeScript!
 
-- use of ant.design components to attempt to try and make the app look bearable
+- Use of ant.design components to attempt to try and make the app look bearable
 
 - The challenge proposes the following critera:
 
