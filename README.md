@@ -1,12 +1,12 @@
 ## github-profiles challenge
 
-### my rendition of [florinpop17 app ideas (GitHub-Profiles)](https://github.com/florinpop17/app-ideas/blob/master/Projects/2-Intermediate/GitHub-Profiles.md)
+### My rendition of [florinpop17 app ideas (GitHub-Profiles)](https://github.com/florinpop17/app-ideas/blob/master/Projects/2-Intermediate/GitHub-Profiles.md)
 
 Solo project to improve my understanding of React and further improve my TypeScript!
 
 - Use of ant.design components to attempt to try and make the app look bearable
 
-- The challenge proposes the following critera:
+- The challenge proposes the following criteria:
 
   - Utilise GitHub API
   - User can enter a username
