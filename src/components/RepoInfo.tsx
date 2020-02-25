@@ -1,7 +1,7 @@
 import React from "react";
+import * as _ from "lodash";
 import { GithubUserRepoResponse } from "../api/github";
 import { List, Avatar, Icon } from "antd";
-import * as _ from "lodash";
 
 interface Props {
   repos: GithubUserRepoResponse[];

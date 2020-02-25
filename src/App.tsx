@@ -1,20 +1,26 @@
 import React from "react";
+import * as _ from "lodash";
 import { Row, Col, Input, Spin, Alert } from "antd";
 import { Layout } from "antd";
 import { sortGitUserData, GithubUserData } from "./api/github";
 import { UserInfo } from "./components/UserInfo";
 import { RepoInfo } from "./components/RepoInfo";
-import * as _ from "lodash";
 
-const { Header, Footer, Content } = Layout;
+const { Header, Content } = Layout;
 const { Search } = Input;
 
 export const App: React.FC = () => {
   const [userDetails, setUserDetails] = React.useState<GithubUserData>();
+  const [error, setError] = React.useState<Error | null>(null);
 
   const fetchData = async (username: string): Promise<void> => {
-    const gitUserData = await sortGitUserData(username);
-    setUserDetails(gitUserData);
+    try {
+      const gitUserData = await sortGitUserData(username);
+      setUserDetails(gitUserData);
+      setError(null);
+    } catch (error) {
+      setError(error);
+    }
   };
 
   const content: JSX.Element = (
@@ -47,6 +53,7 @@ export const App: React.FC = () => {
 
   return (
     <Layout>
+      {error ? <Alert message="Error, username does not exist!" type="error" banner /> : null}
       <Header>Github Profiles</Header>
       <Content>{content}</Content>
     </Layout>

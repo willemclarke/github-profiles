@@ -1,4 +1,3 @@
-import React from "react";
 import rp from "request-promise";
 import * as _ from "lodash";
 
@@ -45,25 +44,21 @@ function getGithubUserRepos(username: string): rp.RequestPromise<GithubUserRepoR
 }
 
 export async function sortGitUserData(username: string): Promise<GithubUserData> {
-  try {
-    const user = await getGithubUser(username);
-    const { name, login, avatar_url, followers, bio, public_repos } = user;
-    const userRepos = await getGithubUserRepos(username);
-    const orderReposByStarCount = _.orderBy(userRepos, ["stargazers_count"], ["desc"]);
-    const topFourRepos = _.slice(orderReposByStarCount, 0, 4);
+  const user = await getGithubUser(username);
+  const { name, login, avatar_url, followers, bio, public_repos } = user;
+  const userRepos = await getGithubUserRepos(username);
+  const orderReposByStarCount = _.orderBy(userRepos, ["stargazers_count"], ["desc"]);
+  const topFourRepos = _.slice(orderReposByStarCount, 0, 4);
 
-    const data = {
-      name,
-      username: login,
-      avatar: avatar_url,
-      followers: followers,
-      description: bio,
-      repositoriesCount: public_repos,
-      repositories: topFourRepos
-    };
-    return data;
-  } catch (err) {
-    console.log("Cannot fetch data from GitHub API", err);
-    throw err;
-  }
+  const data = {
+    name,
+    username: login,
+    avatar: avatar_url,
+    followers: followers,
+    description: bio,
+    repositoriesCount: public_repos,
+    repositories: topFourRepos
+  };
+
+  return data;
 }
